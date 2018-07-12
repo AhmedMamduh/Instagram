@@ -18,7 +18,7 @@ def create
 	@pic = current_user.pics.build(pic_params)
 
 	if @pic.save
-		redirect_to @pic, notice: "yess it was posted"
+		redirect_to @pic, notice: "Image added successfully"
 	else
 		render "new"
 	end
@@ -30,7 +30,7 @@ end
 
 def update
  if @pic.update(pic_params)
-	redirect_to @pic, notice: "congrats pic updated"
+	redirect_to @pic, notice: "Image updated successfully"
  else
 	render "edit"
  end
