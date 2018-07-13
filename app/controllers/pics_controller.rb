@@ -3,60 +3,58 @@ before_action :find_pic, only: [:show, :edit, :update, :destroy, :upvote]
 before_action :authenticate_user!, except: [:index, :show]
 
 
-def index
-	@pic = Pic.all.order("created_at DESC")
-end
-
-def show
-end
-
-def new
-	@pic = current_user.pics.build
-end
-
-def create
-	@pic = current_user.pics.build(pic_params)
-
-	if @pic.save
-		redirect_to @pic, notice: "Image added successfully"
-	else
-		render "new"
+	def index
+		@pic = Pic.all.order("created_at DESC")
 	end
-end
 
-def edit
+	def show
+	end
 
-end
+	def new
+		@pic = current_user.pics.build
+	end
 
-def update
- if @pic.update(pic_params)
-	redirect_to @pic, notice: "Image updated successfully"
- else
-	render "edit"
- end
-end
+	def create
+		@pic = current_user.pics.build(pic_params)
 
-def destroy
-@pic.destroy
-redirect_to root_path
-end
+		if @pic.save
+			redirect_to @pic, notice: "Image added successfully"
+		else
+			render "new"
+		end
+	end
 
-def upvote
-@pic.upvote_by current_user
-redirect_to :back
-end
+	def edit
+	end
 
-private
+	def update
+	 if @pic.update(pic_params)
+		redirect_to @pic, notice: "Image updated successfully"
+	 else
+		render "edit"
+	 end
+	end
 
-def pic_params
-	params.require(:pic).permit(:title, :description, :image)
-end
+	def destroy
+		@pic.destroy
+		redirect_to root_path
+	end
 
-def find_pic
-	@pic = Pic.find(params[:id])
-end
+	def upvote
+		@pic.upvote_by current_user
+		redirect_to @pic
+	end
 
 
 
+	private
 
-end
+	def pic_params
+		params.require(:pic).permit(:title, :description, :image)
+	end
+
+	def find_pic
+		@pic = Pic.find(params[:id])
+	end
+
+	end
